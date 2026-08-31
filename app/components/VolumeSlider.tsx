@@ -72,7 +72,7 @@ export function VolumeSlider({
   }
 
   return (
-    <section className="cover-stage flex w-full max-w-3xl flex-col items-center gap-3">
+    <section className="cover-stage flex w-full max-w-3xl flex-col items-center gap-6">
       <div
         className="cover-viewport"
         onPointerDown={onPointerDown}
@@ -115,13 +115,10 @@ export function VolumeSlider({
                   else onSelect(wrap(index, n));
                 }}
               >
-                <img className="cover-face" src={src} alt="" />
-                <img
-                  className="cover-reflection"
-                  src={src}
-                  alt=""
-                  aria-hidden="true"
-                />
+                <span className="cover-stack">
+                  <img className="cover-face" src={src} alt="" />
+                  <span className="cover-gloss" aria-hidden="true" />
+                </span>
               </button>
             );
           })}

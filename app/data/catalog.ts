@@ -16,7 +16,7 @@ export const volumes: Volume[] = [
     id: "vol1",
     title: "Volume 1",
     tagline: "The first stack of stained paper.",
-    cover: "comics/vol1/cover.svg",
+    cover: "comics/vol1/cover1.png",
     status: "available",
     direction: "ltr",
     pages: [

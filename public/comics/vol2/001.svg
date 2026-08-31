@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="1000" viewBox="0 0 700 1000" role="img" aria-label="PLACEHOLDER VOLUME TWO PAGE ONE">
+  <defs>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="31"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncA type="table" tableValues="0 0.14"/>
+      </feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="700" height="1000" fill="#d4c46a"/>
+  <ellipse cx="100" cy="200" rx="220" ry="150" fill="#8a9a3a" opacity="0.3"/>
+  <ellipse cx="600" cy="800" rx="200" ry="180" fill="#6a7a28" opacity="0.25"/>
+  <rect width="700" height="1000" filter="url(#grain)"/>
+  <text x="350" y="400" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="36" letter-spacing="5" fill="#3a4a18">PLACEHOLDER</text>
+  <text x="350" y="480" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="42" font-weight="700" fill="#243010">VOLUME TWO</text>
+  <text x="350" y="550" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="36" fill="#243010">PAGE ONE</text>
+  <text x="350" y="930" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#4a5a20">MNFST! · still not real art</text>
+</svg>

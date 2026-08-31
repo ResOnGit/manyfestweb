@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="1000" viewBox="0 0 700 1000" role="img" aria-label="PLACEHOLDER THING THREE">
+  <defs>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="19"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncA type="table" tableValues="0 0.14"/>
+      </feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="700" height="1000" fill="#dcb85a"/>
+  <ellipse cx="200" cy="900" rx="280" ry="160" fill="#9a6020" opacity="0.28"/>
+  <ellipse cx="620" cy="120" rx="180" ry="120" fill="#c9a24b" opacity="0.35"/>
+  <rect width="700" height="1000" filter="url(#grain)"/>
+  <text x="350" y="430" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="40" letter-spacing="6" fill="#5a3a18">PLACEHOLDER</text>
+  <text x="350" y="520" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="700" fill="#3d2410">THING THREE</text>
+  <text x="350" y="930" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#6b4a22">MNFST! · sample page 3 · last page of vol 1</text>
+</svg>

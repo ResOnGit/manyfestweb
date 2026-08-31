@@ -1,0 +1,10 @@
+# Drop this into the existing Caddyfile on the EliteBook.
+# Point `root` at the folder that contains index.html from `npm run build`
+# (that folder is `build/client` in this repo).
+
+handle_path /manyfestweb/* {
+	root * /home/farez/manyfestweb/build/client
+	encode gzip
+	try_files {path} /index.html
+	file_server
+}

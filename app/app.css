@@ -228,25 +228,45 @@ body {
   position: fixed;
   inset: 0;
   z-index: 40;
-  background: #090807;
   display: grid;
   place-items: center;
+  overflow: hidden;
   cursor: pointer;
+  background: transparent;
+}
+
+.open-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #090807;
+  opacity: 0;
+  animation: overlay-dim 0.68s cubic-bezier(0.45, 0.05, 0.85, 0.2) forwards;
 }
 
 .open-book {
-  --cover-spine: 0.6rem;
-  --cover-block: 0.75rem;
-  width: min(52vw, 280px);
+  --cover-spine: 0.55rem;
+  --cover-block: 0.62rem;
+  z-index: 1;
+  width: min(42vw, 240px);
   perspective: 1200px;
+  perspective-origin: 50% 0%;
+  transform-style: preserve-3d;
 }
 
 .cover-book--open {
   opacity: 1;
   filter: none;
-  transform: none;
-  transform-origin: left center;
-  animation: cover-open 0.9s ease-in forwards;
+  transform-origin: center top;
+  transform-style: preserve-3d;
+  transition: none;
+  animation: cover-fall 0.68s cubic-bezier(0.55, 0.05, 0.9, 0.2) forwards;
+}
+
+.cover-book--lifted {
+  visibility: hidden;
+  transition: none !important;
+  animation: none !important;
 }
 
 .open-book img {
@@ -256,36 +276,27 @@ body {
   object-fit: cover;
 }
 
-.open-shine {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(
-    circle at 50% 42%,
-    rgba(255, 236, 180, 0.85),
-    rgba(255, 220, 120, 0.15) 28%,
-    transparent 62%
-  );
-  opacity: 0;
-  animation: shine 1.05s ease-out 0.25s forwards;
+.open-skip {
+  z-index: 1;
+  animation: page-fade-in 0.35s ease 0.2s both;
 }
 
-@keyframes cover-open {
-  to {
-    transform: rotateY(-78deg);
-    filter: brightness(1.35);
-  }
-}
-
-@keyframes shine {
+@keyframes cover-fall {
   0% {
-    opacity: 0;
-  }
-  40% {
+    transform: rotateX(0deg) translateY(0) scale(1);
     opacity: 1;
+    filter: brightness(1);
   }
   100% {
+    transform: rotateX(62deg) translateY(48vh) scale(0.92);
     opacity: 0;
+    filter: brightness(0.4);
+  }
+}
+
+@keyframes overlay-dim {
+  to {
+    opacity: 1;
   }
 }
 
@@ -309,6 +320,10 @@ body {
   display: flex;
   flex-direction: column;
   animation: page-fade-in 0.4s ease;
+}
+
+.reader-shell[data-from-open="true"] {
+  animation: page-fade-in 1s ease;
 }
 
 @keyframes page-fade-in {
@@ -343,8 +358,13 @@ body {
 
   .cover-card[data-wip="true"][data-active="true"] .cover-book,
   .cover-book--open,
-  .open-shine {
+  .open-overlay::before,
+  .open-skip {
     animation: none;
     transition: none;
+  }
+
+  .open-overlay::before {
+    opacity: 1;
   }
 }

@@ -50,9 +50,7 @@ export default function Home() {
 
   const finishOpen = useCallback(() => {
     if (!opening) return;
-    const id = opening.id;
-    setOpening(null);
-    navigate(`/read/${id}`);
+    navigate(`/read/${opening.id}`, { state: { fromOpenAnimation: true } });
   }, [navigate, opening]);
 
   function openVolume(volume: Volume) {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, Navigate } from "react-router";
+import { Link, Navigate, useLocation } from "react-router";
 import { ComicReader } from "~/components/ComicReader";
 import { SITE } from "~/config";
 import { getVolume } from "~/data/catalog";
@@ -13,7 +13,15 @@ export function meta({ params }: Route.MetaArgs) {
   ];
 }
 
+type ReadLocationState = {
+  fromOpenAnimation?: boolean;
+};
+
 export default function Read({ params }: Route.ComponentProps) {
+  const location = useLocation();
+  const fromOpenAnimation = Boolean(
+    (location.state as ReadLocationState | null)?.fromOpenAnimation,
+  );
   const volume = getVolume(params.volId);
   const [pageIndex, setPageIndex] = useState(() =>
     volume && volume.status !== "wip" ? getLastPageIndex(volume.id) : 0,
@@ -36,7 +44,10 @@ export default function Read({ params }: Route.ComponentProps) {
   }
 
   return (
-    <div className="reader-shell">
+    <div
+      className="reader-shell"
+      data-from-open={fromOpenAnimation ? "true" : undefined}
+    >
       <header className="flex items-center justify-between gap-4 px-4 py-3 text-sm text-[#c8bca8]">
         <Link
           to="/"

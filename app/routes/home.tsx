@@ -89,7 +89,7 @@ export default function Home() {
 
       <p className="mt-10 max-w-sm text-center text-xs leading-relaxed text-[#8a7a68]">
         swipe the covers, use the arrows, or keyboard ← →. tap the front
-        cover to open it. volume 3 is a bit of a tease.
+        cover to open it. WIP covers sit on the shelf until they exist.
       </p>
 
       <Link
@@ -103,7 +103,7 @@ export default function Home() {
 
       {wipMessage ? (
         <p className="wip-toast" role="status">
-          still drawing. nice try.
+          working on it!
         </p>
       ) : null}
     </main>

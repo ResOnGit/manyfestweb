@@ -31,7 +31,13 @@ export function OpenAnimation({ volume, onDone }: OpenAnimationProps) {
       onClick={onDone}
     >
       <div className="open-book">
-        <img src={publicUrl(volume.cover)} alt="" />
+        <span className="cover-book cover-book--open">
+          <span className="cover-spine" aria-hidden="true" />
+          <span className="cover-stack">
+            <img className="cover-face" src={publicUrl(volume.cover)} alt="" />
+          </span>
+          <span className="cover-block" aria-hidden="true" />
+        </span>
       </div>
       <div className="open-shine" />
       <p className="pointer-events-none absolute bottom-8 text-xs tracking-widest text-[#b8a890]">

@@ -115,9 +115,13 @@ export function VolumeSlider({
                   else onSelect(wrap(index, n));
                 }}
               >
-                <span className="cover-stack">
-                  <img className="cover-face" src={src} alt="" />
-                  <span className="cover-gloss" aria-hidden="true" />
+                <span className="cover-book">
+                  <span className="cover-spine" aria-hidden="true" />
+                  <span className="cover-stack">
+                    <img className="cover-face" src={src} alt="" />
+                    <span className="cover-gloss" aria-hidden="true" />
+                  </span>
+                  <span className="cover-block" aria-hidden="true" />
                 </span>
               </button>
             );
@@ -139,7 +143,7 @@ export function VolumeSlider({
           <p className="mt-1 text-sm text-[#b8a890]">{selected.tagline}</p>
           {selected.status === "available" && continuePage != null && continuePage > 0 ? (
             <p className="mt-2 text-xs tracking-wide text-amber-200/80">
-              bookmark · page {continuePage + 1}
+              continue reading from page {continuePage + 1}
             </p>
           ) : null}
         </div>

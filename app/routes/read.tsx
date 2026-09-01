@@ -15,13 +15,13 @@ export function meta({ params }: Route.MetaArgs) {
 
 export default function Read({ params }: Route.ComponentProps) {
   const volume = getVolume(params.volId);
-  const [ready, setReady] = useState(false);
-  const [pageIndex, setPageIndex] = useState(0);
+  const [pageIndex, setPageIndex] = useState(() =>
+    volume && volume.status !== "wip" ? getLastPageIndex(volume.id) : 0,
+  );
 
   useEffect(() => {
     if (!volume || volume.status === "wip") return;
     setPageIndex(getLastPageIndex(volume.id));
-    setReady(true);
   }, [volume]);
 
   if (!volume || volume.status === "wip") {
@@ -48,17 +48,11 @@ export default function Read({ params }: Route.ComponentProps) {
         <p className="truncate text-[#8a7a68]">{volume.title}</p>
       </header>
       <div className="reader-stage h-full">
-        {ready ? (
-          <ComicReader
-            volume={volume}
-            pageIndex={pageIndex}
-            onPageChange={onPageChange}
-          />
-        ) : (
-          <p className="grid h-full place-items-center text-[#8a7a68]">
-            shuffling pages…
-          </p>
-        )}
+        <ComicReader
+          volume={volume}
+          pageIndex={pageIndex}
+          onPageChange={onPageChange}
+        />
       </div>
     </div>
   );

@@ -32,6 +32,7 @@ body {
     radial-gradient(1200px 600px at 50% -10%, #2a2218 0%, transparent 55%),
     radial-gradient(800px 400px at 80% 110%, #1c140e 0%, transparent 50%),
     var(--color-shelf);
+  animation: page-fade-in 0.4s ease;
 }
 
 .hydrate-fallback {
@@ -48,7 +49,9 @@ body {
 
 .cover-viewport {
   --cover-w: min(42vw, 240px);
-  --cover-gap: 1.35rem;
+  --cover-gap: 1.85rem;
+  --cover-spine: 0.55rem;
+  --cover-block: 0.62rem;
   width: 100%;
   overflow: hidden;
   touch-action: pan-y;
@@ -59,44 +62,90 @@ body {
   display: flex;
   align-items: flex-end;
   gap: var(--cover-gap);
-  padding-left: calc(50% - var(--cover-w) / 2);
-  padding-right: calc(50% - var(--cover-w) / 2);
+  padding-left: calc(50% - var(--cover-w) / 2 - var(--cover-spine));
+  padding-right: calc(50% - var(--cover-w) / 2 - var(--cover-block));
   will-change: transform;
 }
 
 .cover-track[data-animate="true"] {
-  transition: transform 0.55s cubic-bezier(0.22, 0.75, 0.2, 1);
+  transition: transform 0.80s cubic-bezier(0.22, 0.75, 0.2, 1);
 }
 
 .cover-card {
+  position: relative;
+  z-index: 0;
   flex: 0 0 var(--cover-w);
   width: var(--cover-w);
   line-height: 0;
   font-size: 0;
 }
 
-.cover-stack {
+.cover-card[data-active="true"] {
+  z-index: 2;
+}
+
+.cover-book {
   position: relative;
   display: block;
-  overflow: hidden;
-  border-radius: 2px 10px 10px 2px;
   transform: scale(0.78);
   transform-origin: center bottom;
-  box-shadow:
-    -8px 0 0 -6px rgba(255, 230, 180, 0.15),
-    0 18px 40px rgba(0, 0, 0, 0.45);
   transition:
-    transform 0.55s cubic-bezier(0.22, 0.75, 0.2, 1),
+    transform 1.20s cubic-bezier(0.22, 0.75, 0.2, 1),
     opacity 0.45s ease,
     filter 0.45s ease;
   opacity: 0.55;
   filter: saturate(0.75);
 }
 
-.cover-card[data-active="true"] .cover-stack {
+.cover-card[data-active="true"] .cover-book {
   transform: scale(1);
   opacity: 1;
   filter: none;
+}
+
+.cover-spine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(-1 * var(--cover-spine, 0.55rem));
+  width: var(--cover-spine, 0.55rem);
+  background: linear-gradient(
+    to right,
+    #0c0908 0%,
+    #2a1c14 38%,
+    #4a3828 55%,
+    #1a120e 100%
+  );
+  border-radius: 3px 0 0 3px;
+  box-shadow: inset 1px 0 0 rgba(255, 230, 180, 0.2);
+}
+
+.cover-block {
+  position: absolute;
+  z-index: 0;
+  top: 5px;
+  bottom: 5px;
+  /* Tuck under the cover so there is no black gap by the jpg. */
+  right: calc(-1 * var(--cover-block, 0.62rem) + 3px);
+  width: var(--cover-block, 0.62rem);
+  background: repeating-linear-gradient(
+    to right,
+    #e4d8c0 0px,
+    #e4d8c0 1px,
+    #b9a888 1px,
+    #b9a888 1.5px
+  );
+  border-radius: 0 1px 1px 0;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.cover-stack {
+  position: relative;
+  z-index: 1;
+  display: block;
+  overflow: hidden;
+  border-radius: 0;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
 }
 
 .cover-face {
@@ -146,7 +195,7 @@ body {
   }
 }
 
-.cover-card[data-wip="true"][data-active="true"] .cover-stack {
+.cover-card[data-wip="true"][data-active="true"] .cover-book {
   animation: bob 2.8s ease-in-out infinite;
 }
 
@@ -157,10 +206,10 @@ body {
 @keyframes bob {
   0%,
   100% {
-    transform: translateY(0);
+    transform: scale(1) translateY(0);
   }
   50% {
-    transform: translateY(-14px);
+    transform: scale(1) translateY(-14px);
   }
 }
 
@@ -186,8 +235,18 @@ body {
 }
 
 .open-book {
+  --cover-spine: 0.6rem;
+  --cover-block: 0.75rem;
   width: min(52vw, 280px);
   perspective: 1200px;
+}
+
+.cover-book--open {
+  opacity: 1;
+  filter: none;
+  transform: none;
+  transform-origin: left center;
+  animation: cover-open 0.9s ease-in forwards;
 }
 
 .open-book img {
@@ -195,10 +254,6 @@ body {
   width: 100%;
   aspect-ratio: 3 / 4;
   object-fit: cover;
-  border-radius: 2px 10px 10px 2px;
-  transform-origin: left center;
-  animation: cover-open 0.9s ease-in forwards;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
 }
 
 .open-shine {
@@ -253,6 +308,16 @@ body {
   background: #0d0c0b;
   display: flex;
   flex-direction: column;
+  animation: page-fade-in 0.4s ease;
+}
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .reader-stage {
@@ -263,8 +328,10 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .cover-track[data-animate="true"],
-  .cover-stack,
-  .cover-caption {
+  .cover-book,
+  .cover-caption,
+  .shelf-shell,
+  .reader-shell {
     transition: none;
     animation: none;
   }
@@ -274,8 +341,8 @@ body {
     top: 39%;
   }
 
-  .cover-card[data-wip="true"][data-active="true"] .cover-stack,
-  .open-book img,
+  .cover-card[data-wip="true"][data-active="true"] .cover-book,
+  .cover-book--open,
   .open-shine {
     animation: none;
     transition: none;

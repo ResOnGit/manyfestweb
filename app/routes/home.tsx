@@ -88,15 +88,16 @@ export default function Home() {
       />
 
       <p className="mt-10 max-w-sm text-center text-xs leading-relaxed text-[#8a7a68]">
-        swipe the covers, use the arrows, or keyboard ← →. tap the front
-        cover to open it. WIP covers sit on the shelf until they exist.
+        swipe the covers, <br />
+        use the arrows,<br />
+        tap the front cover to open it.
       </p>
 
       <Link
         to="/about"
         className="mt-8 text-xs tracking-widest text-[#8a7a68] underline-offset-4 hover:text-[#e8dcc8] hover:underline"
       >
-        about
+        about who?
       </Link>
 
       {opening ? <OpenAnimation volume={opening} onDone={finishOpen} /> : null}

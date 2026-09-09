@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, Navigate } from "react-router";
+import { Link, Navigate, useLocation } from "react-router";
 import { ComicReader } from "~/components/ComicReader";
 import { SITE } from "~/config";
 import { getVolume } from "~/data/catalog";
@@ -13,15 +13,23 @@ export function meta({ params }: Route.MetaArgs) {
   ];
 }
 
+type ReadLocationState = {
+  fromOpenAnimation?: boolean;
+};
+
 export default function Read({ params }: Route.ComponentProps) {
+  const location = useLocation();
+  const fromOpenAnimation = Boolean(
+    (location.state as ReadLocationState | null)?.fromOpenAnimation,
+  );
   const volume = getVolume(params.volId);
-  const [ready, setReady] = useState(false);
-  const [pageIndex, setPageIndex] = useState(0);
+  const [pageIndex, setPageIndex] = useState(() =>
+    volume && volume.status !== "wip" ? getLastPageIndex(volume.id) : 0,
+  );
 
   useEffect(() => {
     if (!volume || volume.status === "wip") return;
     setPageIndex(getLastPageIndex(volume.id));
-    setReady(true);
   }, [volume]);
 
   if (!volume || volume.status === "wip") {
@@ -36,7 +44,10 @@ export default function Read({ params }: Route.ComponentProps) {
   }
 
   return (
-    <div className="reader-shell">
+    <div
+      className="reader-shell"
+      data-from-open={fromOpenAnimation ? "true" : undefined}
+    >
       <header className="flex items-center justify-between gap-4 px-4 py-3 text-sm text-[#c8bca8]">
         <Link
           to="/"
@@ -48,17 +59,11 @@ export default function Read({ params }: Route.ComponentProps) {
         <p className="truncate text-[#8a7a68]">{volume.title}</p>
       </header>
       <div className="reader-stage h-full">
-        {ready ? (
-          <ComicReader
-            volume={volume}
-            pageIndex={pageIndex}
-            onPageChange={onPageChange}
-          />
-        ) : (
-          <p className="grid h-full place-items-center text-[#8a7a68]">
-            shuffling pages…
-          </p>
-        )}
+        <ComicReader
+          volume={volume}
+          pageIndex={pageIndex}
+          onPageChange={onPageChange}
+        />
       </div>
     </div>
   );

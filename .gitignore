@@ -2,6 +2,20 @@
 .env
 /node_modules/
 
+
 # React Router
 /.react-router/
 /build/
+
+#whatev
+/agent/
+/agents/
+
+#misc
+.jpeg
+.webm
+.webp
+.jpg
+.png
+.svg
+.ico
